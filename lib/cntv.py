@@ -145,6 +145,10 @@ def get_pid_by_url(url):
             pid = guid
     elif re.match(r'http://xiyou.cntv.cn/v-[\w-]+\.html', url):
         pid = r1(r'http://xiyou.cntv.cn/v-([\w-]+)\.html', url)
+    elif re.match(r'http://www.xwlb.tv/\d+.html', url):
+        page = get_html(url, const.USER_AGENT, const.REFER_URL)
+        pid_info = re.search(r'&videoCenterId=([0-9A-Fa-f]){32}', page)
+        pid = pid_info.group(0).split('=')[-1]
     else:
         pid = None
 
